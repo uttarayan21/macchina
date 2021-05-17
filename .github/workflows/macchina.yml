@@ -7,13 +7,14 @@ jobs:
     name: ${{ matrix.name }} (${{ matrix.target }})
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         target:
           - x86_64-unknown-linux-gnu
           - x86_64-apple-darwin
           - x86_64-pc-windows-msvc
           - x86_64-unknown-netbsd
-          # - aarch64-linux-android
+          - aarch64-linux-android
           - aarch64-unknown-linux-gnu
         include:
           - os: ubuntu-latest
@@ -44,12 +45,12 @@ jobs:
             strip: true
             test: true
 
-          # - os: ubuntu-latest
-          #   name: Android
-          #   target: aarch64-linux-android
-          #   cross: true
-          #   strip: true
-          #   test: false
+          - os: ubuntu-latest
+            name: Android
+            target: aarch64-linux-android
+            cross: true
+            strip: true
+            test: false
 
           - os: ubuntu-latest
             name: Linux aarch64
@@ -95,6 +96,6 @@ jobs:
       - name: Doctor
         uses: actions-rs/cargo@v1
         with:
-          command: test
-          args: --target=${{ matrix.target }}
+          command: run
+          args: --target=${{ matrix.target }} -- --doctor
           use-cross: ${{ matrix.cross }}
