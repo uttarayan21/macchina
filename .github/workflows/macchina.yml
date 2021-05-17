@@ -43,7 +43,7 @@ jobs:
             target: x86_64-unknown-netbsd
             cross: true
             strip: true
-            test: true
+            test: false
 
           - os: ubuntu-latest
             name: Android
@@ -99,3 +99,4 @@ jobs:
           command: run
           args: --target=${{ matrix.target }} -- --doctor
           use-cross: ${{ matrix.cross }}
+        if: ${{ matrix.test }}
