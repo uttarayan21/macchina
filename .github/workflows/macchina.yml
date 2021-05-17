@@ -1,10 +1,10 @@
-on: [push, pull_request, workflow_dispatch]
+on: [push, pull_request]
 
 name: Build and check all macchina targets
 
 jobs:
   checks:
-    name: ${{ matrix.os }} for ${{ matrix.target }}
+    name: ${{ matrix.name }} (${{ matrix.target }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -17,36 +17,42 @@ jobs:
           - aarch64-unknown-linux-gnu
         include:
           - os: ubuntu-latest
+            name: Linux
             target: x86_64-unknown-linux-gnu
             cross: false
             strip: true
             test: true
 
           - os: macos-latest
+            name: Macos
             target: x86_64-apple-darwin
             cross: false
             strip: true
             test: true
 
           - os: windows-latest
+            name: Windows
             target: x86_64-pc-windows-msvc
             cross: false
             strip: true
             test: true
 
           - os: ubuntu-latest
+            name: Netbsd
             target: x86_64-unknown-netbsd
             cross: true
             strip: true
             test: true
 
           - os: ubuntu-latest
+            name: Android
             target: aarch64-linux-android
             cross: true
             strip: true
             test: false
 
           - os: ubuntu-latest
+            name: Linux aarch64
             target: aarch64-unknown-linux-gnu
             cross: true
             strip: true
