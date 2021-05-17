@@ -69,6 +69,7 @@ jobs:
           command: clippy
           args: --target=${{ matrix.target }} -- --no-deps -D clippy::all
           use-cross: ${{ matrix.cross }}
+        continue-on-error: true
 
       - name: Cargo Build
         uses: actions-rs/cargo@v1
